@@ -25,6 +25,30 @@ The dataset used for this project, sourced from a public repository created by P
 - **Duration**: Duration of the last contact in seconds.
 - **Poutcome**: Outcome of the previous marketing campaign.
 
+## Installing
+
+To run the Jupyter Notebook and reproduce the results:
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/dibang99/bank-marketing-prediction.git
+   ```
+
+2. Navigate to the project directory
+   ```bash
+   cd bank-marketing-prediction
+   ```
+
+3. Install the required libraries:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Open the Jupyter Notebook
+   ```bash
+   jupyter notebook notebook.ipynb
+   ```
+
 ## Visualizations
 
 ### Target Variable Distribution
