@@ -95,7 +95,61 @@ Before diving into model building, we performed an in-depth data exploration:
 - **Feature Analysis**: Analyzed the distribution and significance of each feature.
 - **Class Imbalance**: Addressed the imbalance between the subscribed and non-subscribed classes using techniques like SMOTE.
 
-### Model Selection
+During the analysis of the dataset, several abnormalities and characteristics were identified that could impact the results and validity of the analysis. Addressing these issues is crucial to ensure the accuracy and reliability of the model's performance. Here are the key findings:
+
+#### 1. Missing Values
+
+- **Observation:** The dataset used for this analysis did not have any missing values, as indicated in the dataset documentation. However, if there were missing values, handling them appropriately would be essential. Common strategies include imputation or removing rows/columns with missing data.
+```python
+    print("Missing Values in Each Column:")
+    print(data.isnull().sum())
+```
+        Missing Values in Each Column:
+        age          0
+        job          0
+        marital      0
+        education    0
+        default      0
+        balance      0
+        housing      0
+        loan         0
+        contact      0
+        day          0
+        month        0
+        duration     0
+        campaign     0
+        pdays        0
+        previous     0
+        poutcome     0
+        y            0
+        dtype: int64
+
+
+#### 2. Outliers
+
+- **Observation:** Numerical features such as `balance`, `age`, and `duration` may contain outliers. For instance, some clients may have unusually high or low balances compared to the majority of the dataset. Outliers can skew the analysis and model performance. Identifying and addressing outliers through methods such as statistical analysis or visualization is important to mitigate their impact.
+
+- **Action Taken:** In our analysis, outliers were not explicitly handled. Future work could involve visualizing the distribution of numerical features and applying techniques like z-score or IQR-based methods to detect and manage outliers.
+
+#### 3. Class Imbalance
+
+- **Observation:** The dataset exhibits class imbalance, with a smaller proportion of positive cases (subscribers) compared to negative cases (non-subscribers). This imbalance can affect model performance metrics, such as accuracy, making it appear that the model performs better than it actually does on the minority class.
+
+- **Action Taken:** To address class imbalance, metrics such as precision, recall, and F1 score were used to evaluate the model, as they provide a more balanced view of performance for both classes. Techniques like oversampling the minority class or undersampling the majority class could also be considered to address this issue.
+
+#### 4. Categorical Feature Encoding
+
+- **Observation:** The dataset contains categorical features such as `job`, `marital`, `education`, etc. These features need to be properly encoded for use in machine learning models. Misinterpretation or incorrect encoding of categorical variables can affect model performance.
+
+- **Action Taken:** Categorical features were encoded using one-hot encoding in the preprocessing steps. This approach ensures that categorical variables are appropriately represented in numerical form for the model.
+
+#### 5. Feature Correlation
+
+- **Observation:** Some features may exhibit high correlation with each other. Multicollinearity among features can lead to redundancy and affect model performance.
+
+- **Action Taken:** Correlation analysis was conducted to identify and understand relationships between features. Features with high correlation were noted, and further steps can be taken to address multicollinearity, such as feature selection or dimensionality reduction techniques.
+
+#### Model Selection
 
 We evaluated several machine learning models:
 
@@ -124,6 +178,25 @@ The following metrics were used to evaluate model performance:
 | Gradient Boosting      | 0.895    | 0.554     | 0.336   | 0.418    |
 | Support Vector Machine | 0.888    | 0.000     | 0.000   | 0.000    |
 
+In this section, we evaluate the final model used in our analysis and provide a detailed description of its key characteristics and parameters. Understanding these qualities helps ensure the model's effectiveness and reliability.
+### Final Model: Random Forest
+
+**Chosen Model:**
+Random Forest was selected as the final model based on its overall performance and ability to handle complex datasets.
+
+**Hyperparameters:**
+Hyperparameter tuning was performed to optimize the Random Forest model's performance. The following parameters were adjusted:
+
+1. **`n_estimators` (Number of Trees in the Forest):**
+   - **Description:** Determines the number of decision trees in the forest.
+   - **Optimal Value:** 50
+   - **Impact:** Increasing the number of trees generally improves performance but also increases computational cost. The chosen value balances performance and efficiency.
+
+2. **`max_depth` (Maximum Depth of Trees):**
+   - **Description:** Specifies the maximum depth of each tree in the forest. Controls the complexity of the model.
+   - **Optimal Value:** 20
+   - **Impact:** Deeper trees can model more complex patterns but may lead to overfitting. The chosen value provides a good trade-off between model complexity and generalization.
+
 **Best Parameters for Random Forest:**
 
 - `max_depth`: 20
@@ -132,6 +205,16 @@ The following metrics were used to evaluate model performance:
 **Best F1 Score Achieved:**
 
 - **0.376**
+
+### Discussion:
+
+ - **Accuracy:** The Random Forest model achieved an accuracy of 89.8%, indicating that it correctly classified nearly 90% of the samples in the test set.
+ - **Precision:** With a precision of 61.7%, the model correctly identified a significant proportion of positive cases among all the predicted positive cases.
+ - **Recall:** The recall value of 24.3% suggests that the model identified a smaller proportion of actual positive cases, indicating room for improvement in capturing more positive cases.
+ - **F1 Score:** The F1 Score of 0.349 reflects the balance between precision and recall. It indicates moderate performance, with potential for enhancement.
+
+### Hyperparameter Tuning Impact:
+ - The tuning process focused on finding an optimal balance between model complexity and performance. The chosen values for n_estimators and max_depth were selected based on their impact on model performance, aiming to avoid overfitting while achieving good generalization.
 
 ## Key Insights and Conclusion
 
